@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Protest Song Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Year 10 English</p>
+      <h1>Interactive Protest Song Generator</h1>
+    </div>
+    <div class="mode-switch" aria-label="Writing mode">
+      <button class="mode-button active" type="button" data-mode="support">Support</button>
+      <button class="mode-button" type="button" data-mode="standard">Standard</button>
+      <button class="mode-button" type="button" data-mode="extension">Extension</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="workspace" aria-label="Song writing steps">
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">1</span>
+          <div>
+            <h2>Choose an issue</h2>
+            <p class="hint support-only">Start with something you think should change.</p>
+          </div>
+        </div>
+        <label for="issue">Issue or cause</label>
+        <select id="issue">
+          <option value="">Choose one...</option>
+          <option>Climate action</option>
+          <option>Respect at school</option>
+          <option>Racism</option>
+          <option>Gender equality</option>
+          <option>Cyberbullying</option>
+          <option>Mental health support</option>
+          <option>Homelessness</option>
+          <option>Protecting Country</option>
+          <option value="custom">My own issue</option>
+        </select>
+        <input id="customIssue" class="hidden" type="text" placeholder="Type your own issue">
+        <div class="support-only prompt-box">
+          <strong>Sentence starter:</strong>
+          <span>I want people to notice that...</span>
+        </div>
+        <textarea id="message" rows="3" placeholder="What do you want listeners to understand or do?"></textarea>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">2</span>
+          <div>
+            <h2>Create a metaphor</h2>
+            <p class="hint support-only">Compare your issue to an object, place or force.</p>
+          </div>
+        </div>
+        <label for="metaphorSubject">My issue is like...
+          <span class="tech-help">Compares one thing to another. Example: injustice is a locked gate.</span>
+        </label>
+        <input id="metaphorSubject" type="text" list="metaphorIdeas" placeholder="a storm, locked gate, cracked mirror">
+        <datalist id="metaphorIdeas">
+          <option value="a storm">
+          <option value="a locked gate">
+          <option value="a cracked mirror">
+          <option value="a fire under the floor">
+          <option value="a river rising">
+        </datalist>
+        <label for="metaphorMeaning">because...
+          <span class="tech-help">Explains the comparison. Example: it keeps people outside fairness.</span>
+        </label>
+        <textarea id="metaphorMeaning" rows="3" placeholder="Explain what the comparison shows."></textarea>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">3</span>
+          <div>
+            <h2>Add imagery</h2>
+            <p class="hint support-only">Use details the listener can see, hear or feel.</p>
+          </div>
+        </div>
+        <div class="field-grid">
+          <label>See
+            <span class="tech-help">Visual imagery. Example: cracked signs in the rain.</span>
+            <input id="seeImage" type="text" placeholder="grey skies, empty desks">
+          </label>
+          <label>Hear
+            <span class="tech-help">Sound imagery. Example: chants echoing down the street.</span>
+            <input id="hearImage" type="text" placeholder="sirens, whispers, chanting">
+          </label>
+          <label>Feel
+            <span class="tech-help">Touch or emotion. Example: cold hands, heavy silence.</span>
+            <input id="feelImage" type="text" placeholder="heat, cold hands, heavy silence">
+          </label>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">4</span>
+          <div>
+            <h2>Add more figurative language</h2>
+            <p class="hint support-only">Try at least one extra technique to make your lyrics stronger.</p>
+          </div>
+        </div>
+        <div class="field-grid figurative-grid">
+          <label for="simileLine">Simile
+            <span class="tech-help">Compares using like or as. Example: hope rises like a flare.</span>
+            <input id="simileLine" type="text" placeholder="like a wave breaking through stone">
+          </label>
+          <label for="personificationLine">Personification
+            <span class="tech-help">Gives human action to a thing. Example: the city turns its back.</span>
+            <input id="personificationLine" type="text" placeholder="the city turns its back">
+          </label>
+          <label for="alliterationLine">Alliteration
+            <span class="tech-help">Repeats starting sounds. Example: brave voices burn bright.</span>
+            <input id="alliterationLine" type="text" placeholder="brave voices burn bright">
+          </label>
+        </div>
+        <div class="support-only prompt-box">
+          <strong>Quick guide:</strong>
+          <span>A simile uses like or as, personification gives human actions to a thing, and alliteration repeats starting sounds.</span>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">5</span>
+          <div>
+            <h2>Explain your choices</h2>
+            <p class="hint support-only">Show that the words are your own by explaining why you chose them.</p>
+          </div>
+        </div>
+        <div class="reflection-grid">
+          <label for="metaphorExplanation">Why does this metaphor fit your issue?
+            <textarea id="metaphorExplanation" rows="3" placeholder="It fits because..."></textarea>
+          </label>
+          <label for="imageryExplanation">What emotion should your imagery create?
+            <textarea id="imageryExplanation" rows="3" placeholder="I want the listener to feel..."></textarea>
+          </label>
+          <label for="chorusExplanation">Why should the chorus be repeated?
+            <textarea id="chorusExplanation" rows="3" placeholder="The repetition matters because..."></textarea>
+          </label>
+          <label for="languageExplanation">Which figurative language choice is most effective, and why?
+            <textarea id="languageExplanation" rows="3" placeholder="My strongest technique is... because..."></textarea>
+          </label>
+        </div>
+      </article>
+
+      <article class="panel extension-only">
+        <div class="panel-heading">
+          <span class="step-number">6</span>
+          <div>
+            <h2>Extension techniques</h2>
+            <p class="hint">Use advanced techniques to make your protest song more persuasive.</p>
+          </div>
+        </div>
+        <div class="field-grid extension-grid">
+          <label for="symbolismLine">Symbolism
+            <span class="tech-help">Object stands for an idea. Example: a locked door = exclusion.</span>
+            <input id="symbolismLine" type="text" placeholder="a locked door, a raised fist, a cracked flag">
+          </label>
+          <label for="hyperboleLine">Hyperbole
+            <span class="tech-help">Exaggeration for impact. Example: waited a thousand years.</span>
+            <input id="hyperboleLine" type="text" placeholder="we have waited a thousand years">
+          </label>
+          <label for="rhetoricalQuestionLine">Rhetorical question
+            <span class="tech-help">Question with a point. Example: How long will they look away?</span>
+            <input id="rhetoricalQuestionLine" type="text" placeholder="How long will they look away?">
+          </label>
+          <label for="anaphoraLine">Anaphora
+            <span class="tech-help">Repeat opening words. Example: We see... We hear... We rise...</span>
+            <input id="anaphoraLine" type="text" placeholder="We see... We hear... We rise...">
+          </label>
+          <label for="contrastLine">Contrast
+            <span class="tech-help">Place opposites together. Example: warm rooms, cold streets.</span>
+            <input id="contrastLine" type="text" placeholder="warm rooms and cold streets">
+          </label>
+          <label for="ironyLine">Irony
+            <span class="tech-help">Shows a contradiction. Example: called free while silenced.</span>
+            <input id="ironyLine" type="text" placeholder="they call it freedom while voices are silenced">
+          </label>
+          <label for="motifLine">Motif
+            <span class="tech-help">Repeated image or idea. Example: chains returning in each verse.</span>
+            <input id="motifLine" type="text" placeholder="chains, fire, hands, doors, voices">
+          </label>
+          <label for="allusionLine">Allusion
+            <span class="tech-help">Reference to something known. Example: a march or famous speech.</span>
+            <input id="allusionLine" type="text" placeholder="a march, a bridge, a famous speech">
+          </label>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">7</span>
+          <div>
+            <h2>Create a repeated chorus</h2>
+            <p class="hint support-only">Repeat a strong line to make your message memorable.</p>
+          </div>
+        </div>
+        <label for="chorusLine">Repeated line
+          <span class="tech-help">Repetition makes the message memorable. Example: We will rise, we will rise.</span>
+        </label>
+        <input id="chorusLine" type="text" placeholder="We will rise, we will rise">
+        <label for="chorusResponse">Follow-up line
+          <span class="tech-help">Adds force or response. Example: until every voice is heard.</span>
+        </label>
+        <input id="chorusResponse" type="text" placeholder="until the morning opens its eyes">
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <span class="step-number">8</span>
+          <div>
+            <h2>Write up to three verses</h2>
+            <p class="hint support-only">Start with Verse 1. Add Verse 2 or Verse 3 if you want to develop the protest further.</p>
+          </div>
+        </div>
+        <div class="verse-grid">
+          <p class="revision-note">Revision suggestions unlock after you add an issue, message, metaphor and at least two imagery details. The app will not write lyrics for you.</p>
+          <div class="verse-block">
+            <label for="verse1">Verse 1</label>
+            <textarea id="verse1" rows="6" placeholder="Write verse 1 here..."></textarea>
+            <button class="secondary-button suggest-verse" type="button" data-verse="1" disabled>Suggest revision</button>
+            <div class="revision-output" id="verse1Revision" aria-live="polite"></div>
+          </div>
+          <div class="verse-block">
+            <label for="verse2">Verse 2</label>
+            <textarea id="verse2" rows="6" placeholder="Optional second verse..."></textarea>
+            <button class="secondary-button suggest-verse" type="button" data-verse="2" disabled>Suggest revision</button>
+            <div class="revision-output" id="verse2Revision" aria-live="polite"></div>
+          </div>
+          <div class="verse-block">
+            <label for="verse3">Verse 3</label>
+            <textarea id="verse3" rows="6" placeholder="Optional third verse..."></textarea>
+            <button class="secondary-button suggest-verse" type="button" data-verse="3" disabled>Suggest revision</button>
+            <div class="revision-output" id="verse3Revision" aria-live="polite"></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <aside class="sidebar" aria-label="Checklist and final lyrics">
+      <section class="panel checklist-panel">
+        <h2>Figurative language check</h2>
+        <label class="check-row">
+          <input id="metaphorCheck" type="checkbox">
+          <span>Metaphor compares the issue to something else</span>
+        </label>
+        <label class="check-row">
+          <input id="imageryCheck" type="checkbox">
+          <span>Imagery uses sensory detail</span>
+        </label>
+        <label class="check-row">
+          <input id="repetitionCheck" type="checkbox">
+          <span>Repetition strengthens the chorus</span>
+        </label>
+        <label class="check-row">
+          <input id="simileCheck" type="checkbox">
+          <span>Simile uses like or as to compare ideas</span>
+        </label>
+        <label class="check-row">
+          <input id="personificationCheck" type="checkbox">
+          <span>Personification gives human qualities to an idea or object</span>
+        </label>
+        <label class="check-row">
+          <input id="alliterationCheck" type="checkbox">
+          <span>Alliteration repeats starting sounds for emphasis</span>
+        </label>
+        <label class="check-row">
+          <input id="explanationCheck" type="checkbox">
+          <span>Student explains why their language choices are effective</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="symbolismCheck" type="checkbox">
+          <span>Symbolism uses an object to represent a bigger idea</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="hyperboleCheck" type="checkbox">
+          <span>Hyperbole exaggerates for emotional impact</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="rhetoricalQuestionCheck" type="checkbox">
+          <span>Rhetorical question challenges the listener</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="anaphoraCheck" type="checkbox">
+          <span>Anaphora repeats opening words across lines</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="contrastCheck" type="checkbox">
+          <span>Contrast highlights injustice by placing opposites together</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="ironyCheck" type="checkbox">
+          <span>Irony shows the gap between what is said and what is true</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="motifCheck" type="checkbox">
+          <span>Motif repeats an image or idea across the song</span>
+        </label>
+        <label class="check-row extension-only">
+          <input id="allusionCheck" type="checkbox">
+          <span>Allusion refers to a known event, person, text or movement</span>
+        </label>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+      </section>
+
+      <section class="panel review-panel">
+        <div class="review-heading">
+          <h2>Keep, Improve, Try</h2>
+          <button id="reviewDraft" class="secondary-button" type="button">Review draft</button>
+        </div>
+        <div id="reviewOutput" class="review-output" aria-live="polite">
+          Complete your draft, then review it for feedback and suggestions before downloading.
+        </div>
+      </section>
+
+      <section class="panel feedback-gate-panel">
+        <h2>Feedback checklist</h2>
+        <label class="check-row">
+          <input id="requiredChecklistGate" type="checkbox">
+          <span>Minimum draft is ready: issue, message, metaphor, imagery and Verse 1</span>
+        </label>
+        <label class="check-row">
+          <input id="languageTechniqueGate" type="checkbox">
+          <span>At least one extra language technique has been attempted</span>
+        </label>
+        <label class="check-row">
+          <input id="revisionFeedbackGate" type="checkbox">
+          <span>Verse 1 has received revision suggestions</span>
+        </label>
+        <label class="check-row">
+          <input id="reviewFeedbackGate" type="checkbox">
+          <span>Keep, Improve, Try feedback has been given</span>
+        </label>
+        <label class="check-row">
+          <input id="negativeFeedbackGate" type="checkbox">
+          <span>Improve items have been cleared or reflected on</span>
+        </label>
+        <label for="feedbackReflection">Response to feedback
+          <span class="tech-help">If Improve items remain, explain what you revised or why you are ready to submit.</span>
+        </label>
+        <textarea id="feedbackReflection" rows="3" placeholder="One piece of feedback I responded to was..."></textarea>
+        <div id="gateFeedback" class="feedback gate-feedback" aria-live="polite"></div>
+      </section>
+
+      <section class="panel lyrics-panel">
+        <div class="lyrics-heading">
+          <h2>Final lyrics</h2>
+          <div>
+            <p class="download-note">Review the draft, then choose a final format.</p>
+            <div class="download-actions" aria-label="Download options">
+              <button class="download-option" type="button" data-format="pdf" disabled>PDF</button>
+              <button class="download-option" type="button" data-format="doc" disabled>Word Doc</button>
+              <button class="download-option" type="button" data-format="txt" disabled>Text</button>
+              <button class="download-option" type="button" data-format="html" disabled>HTML</button>
+            </div>
+            <p id="downloadStatus" class="download-status" aria-live="polite">Review first to unlock downloads.</p>
+          </div>
+        </div>
+        <pre id="lyricsOutput" tabindex="0"></pre>
+      </section>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
