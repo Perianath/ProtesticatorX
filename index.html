@@ -222,7 +222,7 @@
           </div>
         </div>
         <div class="verse-grid">
-          <p class="revision-note">Revision suggestions unlock after you add an issue, message, metaphor and at least two imagery details. The app will not write lyrics for you.</p>
+          <p class="revision-note">Revision suggestions unlock after a verse has at least four lines and one figurative language technique. The app will not write lyrics for you.</p>
           <div class="verse-block">
             <label for="verse1">Verse 1</label>
             <textarea id="verse1" rows="6" placeholder="Write verse 1 here..."></textarea>
@@ -324,27 +324,11 @@
       <section class="panel feedback-gate-panel">
         <h2>Feedback checklist</h2>
         <label class="check-row">
-          <input id="requiredChecklistGate" type="checkbox">
-          <span>Minimum draft is ready: issue, message, metaphor, imagery and Verse 1</span>
-        </label>
-        <label class="check-row">
-          <input id="languageTechniqueGate" type="checkbox">
-          <span>At least one extra language technique has been attempted</span>
-        </label>
-        <label class="check-row">
-          <input id="revisionFeedbackGate" type="checkbox">
-          <span>Verse 1 has received revision suggestions</span>
-        </label>
-        <label class="check-row">
-          <input id="reviewFeedbackGate" type="checkbox">
-          <span>Keep, Improve, Try feedback has been given</span>
-        </label>
-        <label class="check-row">
           <input id="negativeFeedbackGate" type="checkbox">
-          <span>Improve items have been cleared or reflected on</span>
+          <span>I have read and responded to feedback</span>
         </label>
         <label for="feedbackReflection">Response to feedback
-          <span class="tech-help">If Improve items remain, explain what you revised or why you are ready to submit.</span>
+          <span class="tech-help">Write a short response showing you read the feedback.</span>
         </label>
         <textarea id="feedbackReflection" rows="3" placeholder="One piece of feedback I responded to was..."></textarea>
         <div id="gateFeedback" class="feedback gate-feedback" aria-live="polite"></div>

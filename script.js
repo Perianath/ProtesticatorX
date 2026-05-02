@@ -48,10 +48,6 @@ const checks = {
 };
 
 const feedbackGates = {
-  requiredChecklist: document.querySelector("#requiredChecklistGate"),
-  languageTechnique: document.querySelector("#languageTechniqueGate"),
-  revisionFeedback: document.querySelector("#revisionFeedbackGate"),
-  reviewFeedback: document.querySelector("#reviewFeedbackGate"),
   negativeFeedback: document.querySelector("#negativeFeedbackGate")
 };
 
@@ -225,16 +221,13 @@ function hasOneExtraLanguageTechnique() {
 }
 
 function hasFeedbackReflection() {
-  return feedbackReflection.value.trim().split(/\s+/).filter(Boolean).length >= 8;
+  return feedbackReflection.value.trim().length > 0;
 }
 
-function hasVerseSuggestionInputs() {
-  const hasIssue = getIssue().trim().length > 0;
-  const hasMessage = fields.message.value.trim().split(/\s+/).filter(Boolean).length >= 5;
-  const hasMetaphor = fields.metaphorSubject.value.trim().length > 2 && fields.metaphorMeaning.value.trim().length > 8;
-  const imageryCount = [fields.seeImage, fields.hearImage, fields.feelImage].filter((field) => field.value.trim()).length;
+function hasVerseSuggestionInputs(verseNumber) {
+  const verseLineCount = fields[`verse${verseNumber}`].value.split("\n").filter((line) => line.trim()).length;
 
-  return hasIssue && hasMessage && hasMetaphor && imageryCount >= 2;
+  return verseLineCount >= 4 && hasOneExtraLanguageTechnique();
 }
 
 function formatVerses() {
@@ -576,7 +569,7 @@ function renderDraftReview() {
     : "<li>Your strongest choices will appear here once you add more detail.</li>";
   const improve = review.improve.length
     ? review.improve.map((item) => `<li>${escapeHtml(item)}</li>`).join("")
-    : "<li>No Improve items remain. You may download once the feedback checklist is complete.</li>";
+    : "<li>No major Improve items remain. Write a short response to feedback to complete the checklist.</li>";
   const tryIdeas = review.tryIdeas.length
     ? review.tryIdeas.map((item) => `<li>${escapeHtml(item)}</li>`).join("")
     : "<li>Try reading the song aloud and underlining the line with the strongest audience impact.</li>";
@@ -596,17 +589,11 @@ function renderDraftReview() {
 }
 
 function updateFeedbackGates() {
-  const minimumReady = hasMinimumDraftReady();
-  const languageTechniqueReady = hasOneExtraLanguageTechnique();
   const feedbackGiven = draftHasCurrentReview;
-  const negativesClearedOrReflected = feedbackGiven && (!currentReviewHasNegatives || hasFeedbackReflection());
-  const canDownload = minimumReady && languageTechniqueReady && hasCurrentRevisionFeedback && feedbackGiven && negativesClearedOrReflected;
+  const feedbackResponded = feedbackGiven && hasFeedbackReflection();
+  const canDownload = feedbackResponded;
 
-  feedbackGates.requiredChecklist.checked = minimumReady;
-  feedbackGates.languageTechnique.checked = languageTechniqueReady;
-  feedbackGates.revisionFeedback.checked = hasCurrentRevisionFeedback;
-  feedbackGates.reviewFeedback.checked = feedbackGiven;
-  feedbackGates.negativeFeedback.checked = negativesClearedOrReflected;
+  feedbackGates.negativeFeedback.checked = feedbackResponded;
 
   downloadButtons.forEach((button) => {
     button.disabled = !canDownload;
@@ -619,24 +606,16 @@ function updateFeedbackGates() {
   }
 
   const blockers = [];
-  if (!minimumReady) blockers.push("complete the minimum draft: issue, message, metaphor, two imagery details and four lines in Verse 1");
-  if (!languageTechniqueReady) blockers.push("attempt at least one extra language technique");
-  if (!hasCurrentRevisionFeedback) blockers.push("get Verse 1 revision suggestions");
   if (!feedbackGiven) blockers.push("run Keep, Improve, Try feedback");
-  if (feedbackGiven && currentReviewHasNegatives && !hasFeedbackReflection()) {
-    blockers.push("revise the Improve items or write a response to the feedback");
-  }
+  if (feedbackGiven && !hasFeedbackReflection()) blockers.push("write a short response to the feedback");
 
   gateFeedback.textContent = `Downloads locked: ${blockers.join(", ")}.`;
   downloadStatus.textContent = "Complete the feedback checklist to unlock downloads.";
 }
 
 function canDownloadFinalLyrics() {
-  return hasMinimumDraftReady()
-    && hasOneExtraLanguageTechnique()
-    && hasCurrentRevisionFeedback
-    && draftHasCurrentReview
-    && (!currentReviewHasNegatives || hasFeedbackReflection());
+  return draftHasCurrentReview
+    && hasFeedbackReflection();
 }
 
 function markReviewOutdated() {
@@ -723,13 +702,12 @@ function setMode(mode) {
 }
 
 function updateRevisionButtons() {
-  const ready = hasVerseSuggestionInputs();
-
   suggestVerseButtons.forEach((button) => {
+    const ready = hasVerseSuggestionInputs(Number(button.dataset.verse));
     button.disabled = !ready;
     button.title = ready
       ? "Get revision suggestions based on your own draft."
-      : "Enter an issue, message, metaphor and at least two imagery details first.";
+      : "Write at least four lines in this verse and add one figurative language technique first.";
   });
 }
 
@@ -758,8 +736,8 @@ function getImagerySummary() {
 }
 
 function renderRevisionSuggestions(verseNumber = 1) {
-  if (!hasVerseSuggestionInputs()) {
-    revisionOutputs[verseNumber].innerHTML = "<p>Add your issue, message, metaphor and at least two imagery details first.</p>";
+  if (!hasVerseSuggestionInputs(verseNumber)) {
+    revisionOutputs[verseNumber].innerHTML = "<p>Write at least four lines in this verse and add one figurative language technique first.</p>";
     return;
   }
 
